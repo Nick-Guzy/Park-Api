@@ -1,34 +1,49 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using ParkApi.Models;
 
-namespace ParkApi.Controllers;
-
-[ApiController]
-[Route("[controller]")]
-public class NationalParkController : ControllerBase
+namespace ParkApi.Controllers
 {
-    private static readonly string[] Summaries = new[]
-    {
-        "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-    };
+  [Route("api/[controller]")]
+  [ApiController]
+  public class NationalParkController : ControllerBase
+  {
+    private readonly ParkApiContext _db;
 
-    private readonly ILogger<NationalParkController> _logger;
-
-    public NationalParkController(ILogger<NationalParkController> logger)
+    public NationalParkController(ParkApiContext db)
     {
-        _logger = logger;
+      _db = db;
     }
 
-
-// Used to return a forecast so tailor it
-    [HttpGet(Name = "GetNationalPark")]
-    public IEnumerable<NationalPark> Get()
+    // GET api/NationalPark
+    [HttpGet]
+    public async Task<ActionResult<IEnumerable<NationalPark>>> Get()
     {
-        return Enumerable.Range(1, 5).Select(index => new NationalPark
-        {
-            Date = DateTime.Now.AddDays(index),
-            TemperatureC = Random.Shared.Next(-20, 55),
-            Summary = Summaries[Random.Shared.Next(Summaries.Length)]
-        })
-        .ToArray();
+      return await _db.NationalPark.ToListAsync();
     }
+
+    // GET: api/NationalPark/5
+    [HttpGet("{id}")]
+    public async Task<ActionResult<NationalPark>> GetNationalPark(int id)
+    {
+      NationalPark nationalpark = await _db.NationalPark.FindAsync(id);
+
+      if (nationalpark == null)
+      {
+        return NotFound();
+      }
+
+      return nationalpark;
+    }
+
+     // POST api/NationalPark
+    [HttpPost]
+    public async Task<ActionResult<NationalPark>> Post(NationalPark nationalpark)
+    {
+      _db.NationalPark.Add(nationalpark);
+      await _db.SaveChangesAsync();
+      return CreatedAtAction(nameof(GetNationalPark), new { id = nationalpark.NationalParkId }, nationalpark);
+    }
+    
+  }
 }

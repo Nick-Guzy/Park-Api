@@ -9,7 +9,7 @@
     }
   },
   "profiles": {
-    "CretaceousApi": {
+    "ParkApi": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,
