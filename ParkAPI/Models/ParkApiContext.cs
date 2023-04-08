@@ -4,9 +4,9 @@ namespace ParkApi.Models
 {
   public class ParkApiContext : DbContext
   {
-    public DbSet<StatePark> StateParks { get; set; }
-    public DbSet<NationalPark> NationalParks { get; set; }
-
+    public DbSet<StatePark> StatePark { get; set; }
+    public DbSet<NationalPark> NationalPark { get; set; }
+    public DbSet<User> Users { get; set; }
     public ParkApiContext(DbContextOptions<ParkApiContext> options) : base(options)
     {
     }
@@ -21,10 +21,7 @@ namespace ParkApi.Models
           new StatePark { StateParkId = 4,  StateParkLocation = "State4", StateParkName = "State Name4" },
           new StatePark { StateParkId = 5,  StateParkLocation = "State5", StateParkName = "State Name5" }
         );
-    }
-     protected override void OnModelCreating(ModelBuilder builder)
-     {
-      builder.Entity<NationalPark>()
+         builder.Entity<NationalPark>()
         .HasData(
           new NationalPark { NationalParkId = 1, NationalParkLocation = "National1", NationalParkName = "National Name1"},
           new NationalPark { NationalParkId = 2, NationalParkLocation = "National2", NationalParkName = "National Name2"},
@@ -32,6 +29,11 @@ namespace ParkApi.Models
           new NationalPark { NationalParkId = 4, NationalParkLocation = "National4", NationalParkName = "National Name4"},
           new NationalPark { NationalParkId = 5, NationalParkLocation = "National5", NationalParkName = "National Name5"}
         );
-     }
+         builder.Entity<User>()
+                        .HasKey(u =>u.UserId);
+            builder.Entity<User>()
+                        .HasData(
+                    new User { UserId = "admin1", Name = "JoeMama", Password = "password1" });
+    }
   }
 }
