@@ -1,7 +1,4 @@
-using System;
-using System.Collections.Generic;
-
-namespace TravelApi.Models
+namespace ParkApi.Models
 {
     public partial class User
     {

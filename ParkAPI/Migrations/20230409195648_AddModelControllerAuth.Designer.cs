@@ -10,8 +10,8 @@ using ParkApi.Models;
 namespace ParkApi.Migrations
 {
     [DbContext(typeof(ParkApiContext))]
-    [Migration("20230401224628_Initial")]
-    partial class Initial
+    [Migration("20230409195648_AddModelControllerAuth")]
+    partial class AddModelControllerAuth
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -66,6 +66,30 @@ namespace ParkApi.Migrations
                             StateParkId = 5,
                             StateParkLocation = "State5",
                             StateParkName = "State Name5"
+                        });
+                });
+
+            modelBuilder.Entity("ParkApi.Models.User", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Password")
+                        .HasColumnType("longtext");
+
+                    b.HasKey("UserId");
+
+                    b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = "admin1",
+                            Name = "JoeMama",
+                            Password = "password1"
                         });
                 });
 

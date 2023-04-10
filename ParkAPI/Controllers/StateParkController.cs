@@ -1,11 +1,13 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ParkApi.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ParkApi.Controllers
 {
   [Route("api/[controller]")]
   [ApiController]
+  [Authorize]
   public class StateParkController : ControllerBase
   {
     private readonly ParkApiContext _db;
@@ -17,7 +19,7 @@ namespace ParkApi.Controllers
 
     // GET api/StatePark
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<StatePark>>> Get()
+    public async Task<ActionResult<IEnumerable<StatePark>>> Get(int id, string StateParkName, string StateParkLocation)
     {
       return await _db.StatePark.ToListAsync();
     }

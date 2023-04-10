@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ParkApi.Migrations
 {
-    public partial class Initial : Migration
+    public partial class NewInitial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -46,6 +46,23 @@ namespace ParkApi.Migrations
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
+            migrationBuilder.CreateTable(
+                name: "Users",
+                columns: table => new
+                {
+                    UserId = table.Column<string>(type: "varchar(255)", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Name = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Password = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Users", x => x.UserId);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
             migrationBuilder.InsertData(
                 table: "NationalPark",
                 columns: new[] { "NationalParkId", "NationalParkLocation", "NationalParkName" },
@@ -69,6 +86,11 @@ namespace ParkApi.Migrations
                     { 4, "State4", "State Name4" },
                     { 5, "State5", "State Name5" }
                 });
+
+            migrationBuilder.InsertData(
+                table: "Users",
+                columns: new[] { "UserId", "Name", "Password" },
+                values: new object[] { "admin1", "JoeMama", "password1" });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -78,6 +100,9 @@ namespace ParkApi.Migrations
 
             migrationBuilder.DropTable(
                 name: "StatePark");
+
+            migrationBuilder.DropTable(
+                name: "Users");
         }
     }
 }

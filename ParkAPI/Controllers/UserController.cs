@@ -1,16 +1,17 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ParkApi.Models;
-using Microsoft.AspNetCore.Authorization;
-using AutoMapper;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
+using AutoMapper;
 using System.Threading.Tasks;
 
-namespace TravelApi.Controllers
+
+namespace ParkApi.Controllers
 {
 
 
@@ -45,7 +46,7 @@ namespace TravelApi.Controllers
                 Subject = new ClaimsIdentity(
                     new Claim[] { new Claim(ClaimTypes.Name, user.UserId) }),
                     NotBefore = DateTime.UtcNow,
-                Expires = DateTime.UtcNow.AddMinutes(20),
+                Expires = DateTime.UtcNow.AddMinutes(1440),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(tokenKey), SecurityAlgorithms.HmacSha256)
             };
 
