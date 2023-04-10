@@ -19,9 +19,12 @@ namespace ParkApi.Controllers
 
     // GET api/StatePark
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<StatePark>>> Get(int id, string StateParkName, string StateParkLocation)
+    public async Task<ActionResult<IEnumerable<StatePark>>> Get(string StateParkName)
     {
-      return await _db.StatePark.ToListAsync();
+      List<StatePark> stateParks = _db.StatePark
+        .Where(entry => entry.StateParkName == StateParkName)
+        .ToList();
+        return stateParks; 
     }
 
     // GET: api/StatePark/5
